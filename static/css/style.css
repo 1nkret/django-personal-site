@@ -1,0 +1,39 @@
+body {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #343a40;
+}
+
+h1, h2 {
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.my-project-empty {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+    font-style: italic;
+}
+
+.badge {
+    font-size: 0.9em;
+    margin-right: 5px;
+    margin-bottom: 5px; /* Добавляет отступ по вертикали */
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+}

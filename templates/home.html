@@ -12,16 +12,37 @@
 
 <h2 id="projects" class="text-center mt-5">My Projects</h2>
 <div class="row">
-    <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Telegram Blackjack Game</h5>
-                <p class="card-text">A bot that lets you play blackjack with friends in Telegram.</p>
-                <a href="https://github.com/your-repo-link" class="btn btn-primary" target="_blank">View on GitHub</a>
+    {% for project in projects %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.description }}</p>
+
+                    {% if project.tags.all %}
+                        <p>
+                            <strong>Technologies:</strong>
+                            {% for tag in project.tags.all %}
+                                <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
+                                    {{ tag.name }}
+                                </span>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+
+                    {% if project.repo_link %}
+                        <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
-    </div>
+    {% endfor %}
 </div>
+
+
 
 <hr>
 
