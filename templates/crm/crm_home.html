@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}CRM Dashboard{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Welcome to CRM</h2>
+<p>Manage your portfolio and tags easily from here.</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Manage Projects</h5>
+                <p class="card-text">Create, edit, and delete projects in your portfolio.</p>
+                <a href="{% url 'crm_project_list' %}" class="btn btn-primary">Go to Projects</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Manage Tags</h5>
+                <p class="card-text">Edit tags and assign them to projects.</p>
+                <a href="{% url 'tag_list' %}" class="btn btn-success">Go to Tags</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

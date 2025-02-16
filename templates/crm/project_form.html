@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title|default:"New Project" }} | CRM{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>{% if project %}Edit Project{% else %}New Project{% endif %}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+        {{ form.title }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+        {{ form.description }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.repo_link.id_for_label }}" class="form-label">Repo link</label>
+        {{ form.repo_link }}
+    </div>
+
+    <div class="mb-3">
+        <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+        {{ form.image }}
+    </div>
+
+    <div class="mb-3">
+        <label for="tag-selector" class="form-label">Tags</label>
+
+        <!-- Select2 с поиском -->
+        <select id="tag-selector" class="form-control select2-tags">
+            <option value="" disabled selected>Выберите тег...</option>
+            {% for tag in form.tags.field.queryset %}
+                <option value="{{ tag.id }}">{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Контейнер с выбранными тегами -->
+        <div id="selected-tags" class="mt-2">
+            {% if project and project.pk %}
+                {% for tag in project.tags.all %}
+                    <span class="tag-badge badge bg-primary text-white me-1 d-inline-flex align-items-center"
+                          data-tag-id="{{ tag.id }}">
+                        {{ tag.name }}
+                        <button type="button" class="remove-tag btn-close btn-close-white ms-2"
+                                aria-label="Close" data-tag-id="{{ tag.id }}"></button>
+                    </span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Скрытое поле для передачи тегов -->
+        <input type="hidden" name="tags" id="selected-tags-input"
+               value="{% if project and project.pk %}{% for tag in project.tags.all %}{{ tag.id }}{% if not forloop.last %},{% endif %}{% endfor %}{% endif %}">
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'crm_project_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Form Errors:</strong>
+    <ul>
+        {% for field, errors in form.errors.items %}
+            <li><strong>{{ field }}</strong>: {{ errors }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}

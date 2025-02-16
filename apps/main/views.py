@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apps.portfolio.models import Project
+from apps.crm.models import Project
 
 
 def home(request):

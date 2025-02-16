@@ -1,14 +1,8 @@
-html, body {
-    height: 100%;
-}
-
-/* Общие стили */
+/* ========== CRM Стили ========== */
 body {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     color: #343a40;
     font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
 }
 
 /* Заголовок страницы */
@@ -85,6 +79,31 @@ input[type="file"]:hover {
     transform: scale(1.05);
 }
 
+/* Таблицы в CRM */
+.table {
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table th {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+}
+
+.table td {
+    padding: 10px;
+}
+
+/* Теги в CRM */
+.badge {
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
 /* Выбранные теги */
 .tag-badge {
     display: inline-block;
@@ -115,58 +134,3 @@ input[type="file"]:hover {
     color: #ff5555;
     transform: scale(1.2);
 }
-
-.container {
-    flex: 1; /* Контент займет доступное место */
-}
-
-footer {
-    background: #212529;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-}
-
-/* Стили для карточек CRM */
-.crm-card {
-    height: 100%; /* Одинаковая высота карточек */
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background: white;
-    min-height: 250px; /* Можно увеличить, если нужно */
-}
-
-/* Делаем .card-body растягиваемым, чтобы кнопки всегда были внизу */
-.crm-card .card-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-/* Заголовок карточки */
-.crm-card .card-title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* Описание карточки */
-.crm-card .card-text {
-    flex-grow: 1;
-    font-size: 16px;
-}
-
-/* Кнопки будут прижаты к нижней части карточки */
-.crm-card .card-body .btn {
-    width: 100%;
-    margin-top: auto;
-}
-
-/* Делаем все колонки flex-контейнерами, чтобы карточки растягивались */
-.col-md-6 {
-    display: flex;
-}
-

@@ -2,11 +2,16 @@
 
 {% block title %}Delete Project{% endblock %}
 
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
+{% endblock %}
+
 {% block content %}
 <h2>Are you sure you want to delete "{{ project.title }}"?</h2>
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-danger">Yes, delete</button>
-    <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancel</a>
+    <a href="{% url 'crm_project_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
 {% endblock %}

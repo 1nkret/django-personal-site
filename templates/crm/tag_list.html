@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Tags | CRM{% endblock %}
+
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Tags Management</h2>
+<a href="{% url 'tag_create' %}" class="btn btn-success">Add New Tag</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Color</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tag in tags %}
+            <tr>
+                <td>{{ tag.name }}</td>
+                <td>
+                    <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
+                        {{ tag.name }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'tag_update' tag.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'tag_delete' tag.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="3">No tags found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
