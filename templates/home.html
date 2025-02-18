@@ -38,6 +38,9 @@
                                 {% endfor %}
                             </p>
                         {% endif %}
+                        <p class="card-duration">
+                            Duration: {{ project.start_date|date:"Y.m" }}{% if project.end_date %} - {{ project.end_date|date:"Y.m" }}{% else %}-(in progress...){% endif %}
+                        </p>
                         {% if project.repo_link %}
                             <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
                         {% endif %}
