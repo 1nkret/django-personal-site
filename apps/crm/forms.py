@@ -8,10 +8,18 @@ class ProjectForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=True
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False
+    )
 
     class Meta:
         model = Project
-        fields = ["title", "description", "repo_link", "image", "tags"]
+        fields = ["title", "description", "repo_link", "image", "tags", "start_date", "end_date"]
 
 
 class TagForm(forms.ModelForm):

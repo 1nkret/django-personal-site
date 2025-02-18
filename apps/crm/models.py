@@ -21,6 +21,9 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name="projects", blank=True)
 
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
     def __str__(self):
         return self.title
 

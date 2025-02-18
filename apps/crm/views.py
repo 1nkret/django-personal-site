@@ -62,35 +62,33 @@ def project_form_handler(request, project=None):
 
         # ✅ Обрабатываем удаление изображения
         if post_data.get("remove_image") == "true" and project and project.image:
-            default_storage.delete(project.image.path)  # Удаляем физический файл
-            project.image = None  # Удаляем путь из БД
+            default_storage.delete(project.image.path)
+            project.image = None
             project.save()
 
         tag_ids_raw = post_data.get("tags", "[]").strip()
-
-        # ✅ Преобразуем строку "1,5" в список [1, 5]
         try:
             if tag_ids_raw.startswith("["):
-                tag_ids = json.loads(tag_ids_raw)  # Если это JSON-список
+                tag_ids = json.loads(tag_ids_raw)
             else:
                 tag_ids = [int(tag_id) for tag_id in tag_ids_raw.split(",") if tag_id.isdigit()]
         except (json.JSONDecodeError, ValueError):
             tag_ids = []
 
-        # ✅ Правильно передаём в POST
         post_data.setlist("tags", [str(tag) for tag in tag_ids])
 
-        # ✅ Передаём исправленные `post_data` в форму
         form = ProjectForm(post_data, request.FILES, instance=project)
 
         if form.is_valid():
             project = form.save(commit=False)
-            project.save()
 
-            # ✅ Теперь Django получает список объектов `Tag`
-            project.tags.set(Tag.objects.filter(id__in=tag_ids))
-
-            return redirect("crm_project_list")
+            # Убеждаемся, что end_date не раньше start_date
+            if project.end_date and project.end_date < project.start_date:
+                form.add_error("end_date", "Дата завершения не может быть раньше даты начала.")
+            else:
+                project.save()
+                project.tags.set(Tag.objects.filter(id__in=tag_ids))
+                return redirect("crm_project_list")
 
     else:
         form = ProjectForm(instance=project)
