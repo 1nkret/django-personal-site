@@ -1,0 +1,416 @@
+/* ========== CRM Sidebar Styles ========== */
+.crm-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.crm-sidebar {
+    width: 250px;
+    color: black;
+    padding: 20px;
+    position: relative; /* Убираем fixed */
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: -100px; /* Сдвигаем влево */
+    padding-left: 0; /* Убираем внутренний отступ слева */
+}
+
+/* CRM Заголовок */
+.crm-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* CRM Меню */
+.crm-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.crm-menu li {
+    margin-bottom: 10px;
+}
+
+/* Ссылки CRM */
+.crm-link {
+    color: black;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.crm-link:hover {
+    background: #6c757d; /* Темно-серый фон при наведении */
+    color: white; /* Белый текст */
+}
+
+/* Центрируем форму внутри CRM */
+.crm-content {
+    flex-grow: 1;
+    padding: 40px;
+    width: 80%; /* Ограничиваем ширину контента */
+    max-width: 1200px; /* Делаем контент не слишком широким */
+    margin: 0 auto; /* Центрируем контент */
+    text-align: left; /* Выравниваем текст по левому краю */
+}
+
+
+/* Улучшенная форма */
+.crm-form-container {
+    width: 100%;
+    max-width: 600px; /* Ограничение ширины */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    margin-left: 150px;
+    text-align: center; /* Выравнивание заголовка */
+}
+
+/* Заголовок формы */
+.crm-form-container h2 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Поля ввода */
+.crm-form-container input,
+.crm-form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    background: #f9f9f9;
+}
+
+/* Подсветка */
+.crm-form-container input:focus,
+.crm-form-container textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    background: white;
+}
+
+/* Кнопка */
+.crm-form-container .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.crm-form-container .btn-primary:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Title Styling */
+.crm-content h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+/* Table Styling */
+.table {
+    width: 90%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table th {
+    background: #343a40;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    border-right: 1px solid #495057;
+}
+
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.table th:last-child, .table td:last-child {
+    border-right: none;
+}
+
+/* Buttons Styling */
+.btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #e0a800;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* Выравниваем теги, увеличиваем отступы */
+#selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Закругляем углы у тегов */
+.tag-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    gap: 5px;
+}
+
+/* Улучшаем кнопку удаления тега */
+.tag-badge button {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Контейнер изображения */
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Обертка для превью и выбора файла */
+.image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Равномерное распределение */
+    gap: 15px;
+    width: 100%;
+    max-width: 400px; /* Ограничиваем ширину */
+}
+
+/* Обертка для превью */
+.image-preview-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Картинка */
+.image-preview {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.image-preview:hover {
+    transform: scale(1.1);
+}
+
+/* Кнопка удаления */
+.remove-image {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.remove-image:hover {
+    background: darkred;
+}
+
+/* Выбор файла */
+.image-actions input[type="file"] {
+    font-size: 14px;
+    padding: 6px;
+    flex-grow: 1; /* Заполняет оставшееся пространство */
+    max-width: 250px;
+}
+
+
+
+.tag-badge .remove-tag {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Выравнивание кнопок */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Отступ между кнопками */
+    margin-top: 20px;
+}
+
+/* Общие стили для кнопок */
+.button-container .btn {
+    flex: 1; /* Делаем кнопки равного размера */
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+/* Кнопка Save */
+.button-container .btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.button-container .btn-primary:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Кнопка Cancel */
+.button-container .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.button-container .btn-secondary:hover {
+    background: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Общий стиль заголовка страницы */
+.crm-page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Поля ввода */
+.crm-form-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9f9f9;
+    transition: all 0.3s ease-in-out;
+}
+
+.crm-form-container input:focus {
+    border-color: #007bff;
+    outline: none;
+    background: white;
+}
+
+/* Контейнер выбора цвета */
+.color-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Стилизация инпута цвета */
+.crm-form-container input[type="color"] {
+    width: 60px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+
+
+/* Кнопки */
+.button-container .btn {
+    flex: 1; /* Делаем кнопки равного размера */
+    padding: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}

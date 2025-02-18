@@ -1,0 +1,33 @@
+/* ========== Портфолио ========== */
+.project-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+    min-height: 250px;
+}
+
+.project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-text {
+    flex-grow: 1;
+}
+
+.card-body .btn {
+    width: 100%;
+    margin-top: auto;
+}

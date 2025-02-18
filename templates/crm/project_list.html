@@ -1,0 +1,40 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Projects | CRM{% endblock %}
+
+{% block crm_content %}
+<h2>Projects Management</h2>
+<a href="{% url 'crm_project_create' %}" class="btn btn-success">Add New Project</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Technologies</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td>{{ project.description|truncatechars:50 }}</td>
+                <td>
+                    {% for tag in project.tags.all %}
+                        <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
+                            {{ tag.name }}
+                        </span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url 'crm_project_update' project.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'crm_project_delete' project.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4">No projects found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

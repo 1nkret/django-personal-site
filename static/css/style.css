@@ -1,0 +1,172 @@
+html, body {
+    height: 100%;
+}
+
+/* Общие стили */
+body {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #343a40;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Заголовок страницы */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Карточка формы */
+form {
+    max-width: 700px; /* Увеличил ширину формы для ровности */
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Поля формы */
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%; /* Делаем все поля одинаковой ширины */
+}
+
+/* Поле загрузки изображения */
+input[type="file"] {
+    border: 1px solid #ced4da;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+    background: white;
+    transition: 0.3s ease-in-out;
+}
+
+input[type="file"]:hover {
+    border-color: #007bff;
+}
+
+/* Кнопки */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+/* Выбранные теги */
+.tag-badge {
+    display: inline-block;
+    background-color: #7b3ff3;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 16px;
+    margin: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.tag-badge:hover {
+    background-color: #5a2dcf;
+    transform: scale(1.05);
+}
+
+/* Удаление тегов */
+.remove-tag {
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 8px;
+    color: #ffdddd;
+    transition: all 0.3s ease-in-out;
+}
+
+.remove-tag:hover {
+    color: #ff5555;
+    transform: scale(1.2);
+}
+
+.container {
+    flex: 1; /* Контент займет доступное место */
+}
+
+footer {
+    background: #212529;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Стили для карточек CRM */
+.crm-card {
+    height: 100%; /* Одинаковая высота карточек */
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    min-height: 250px; /* Можно увеличить, если нужно */
+}
+
+/* Делаем .card-body растягиваемым, чтобы кнопки всегда были внизу */
+.crm-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Заголовок карточки */
+.crm-card .card-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Описание карточки */
+.crm-card .card-text {
+    flex-grow: 1;
+    font-size: 16px;
+}
+
+/* Кнопки будут прижаты к нижней части карточки */
+.crm-card .card-body .btn {
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Делаем все колонки flex-контейнерами, чтобы карточки растягивались */
+.col-md-6 {
+    display: flex;
+}
+

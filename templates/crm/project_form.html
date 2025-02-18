@@ -1,0 +1,94 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}{{ project.title|default:"New Project" }} | CRM{% endblock %}
+
+{% block crm_content %}
+<h2 style="margin-left: -150px">{% if project %}Edit Project{% else %}New Project{% endif %}</h2>
+
+<div class="crm-form-container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+            {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+            {{ form.description }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.repo_link.id_for_label }}" class="form-label">Repo link</label>
+            {{ form.repo_link }}
+        </div>
+
+        <div class="mb-3 image-container">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Project Image</label>
+            <div class="image-wrapper">
+                {% if project.image %}
+                    <div class="image-preview-container">
+                        <a href="{{ project.image.url }}" target="_blank">
+                            <img src="{{ project.image.url }}" alt="Project Image" class="image-preview" id="image-preview">
+                        </a>
+                        <button type="button" class="btn-close remove-image" aria-label="Remove" id="remove-image-btn">&times;</button>
+                    </div>
+                {% endif %}
+                <div class="image-actions">
+                    <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}" class="form-control">
+                    <input type="hidden" name="remove_image" id="remove-image" value="false">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mb-3">
+            <label for="tag-selector" class="form-label">Tags</label>
+            <select id="tag-selector" class="form-control select2-tags">
+                <option value="" disabled selected>Выберите тег...</option>
+                {% for tag in form.tags.field.queryset %}
+                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+
+            <div id="selected-tags" class="mt-2">
+                {% if project and project.pk %}
+                    {% for tag in project.tags.all %}
+                        <span class="tag-badge badge bg-primary text-white me-1 d-inline-flex align-items-center"
+                              data-tag-id="{{ tag.id }}">
+                            {{ tag.name }}
+                            <button type="button" class="remove-tag btn-close btn-close-white ms-2"
+                                    aria-label="Close" data-tag-id="{{ tag.id }}">&times;</button>
+                        </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <input type="hidden" name="tags" id="selected-tags-input"
+                   value="{% if project and project.pk %}{% for tag in project.tags.all %}{{ tag.id }}{% if not forloop.last %},{% endif %}{% endfor %}{% endif %}">
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'crm_project_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const removeBtn = document.getElementById("remove-image-btn");
+    const previewImg = document.getElementById("image-preview");
+    const removeInput = document.getElementById("remove-image");
+
+    if (removeBtn && previewImg) {
+        removeBtn.addEventListener("click", function () {
+            previewImg.style.display = "none"; // Скрываем картинку
+            removeBtn.style.display = "none"; // Скрываем кнопку
+            removeInput.value = "true"; // Устанавливаем значение для удаления
+        });
+    }
+});
+</script>
+{% endblock %}
