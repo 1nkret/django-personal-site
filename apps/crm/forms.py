@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tag, Project
+from .models import Tag, Project, MainPageSettings
 
 
 class ProjectForm(forms.ModelForm):
@@ -21,3 +21,9 @@ class TagForm(forms.ModelForm):
         widgets = {
             "color": forms.TextInput(attrs={"type": "color"}),
         }
+
+
+class MainPageSettingsForm(forms.ModelForm):
+    class Meta:
+        model = MainPageSettings
+        fields = ['title', 'subtitle', 'about_me', 'contact_email', 'contact_phone']

@@ -1,41 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'crm/base_crm.html' %}
 
 {% block title %}{{ tag.name|default:"New Tag" }} | CRM{% endblock %}
 
-{% load static %}
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
-{% endblock %}
+{% block crm_content %}
+<h2 class="crm-page-title" style="margin-right: 150px">{% if tag %}Edit Tag{% else %}New Tag{% endif %}</h2>
 
-{% block content %}
-<h2>{% if tag %}Edit Tag{% else %}New Tag{% endif %}</h2>
+<div class="crm-form-container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Tag Name</label>
+            {{ form.name }}
+        </div>
 
-<form method="post">
-    {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.color.id_for_label }}" class="form-label">Tag Color</label>
+            <div class="color-input-wrapper">
+                {{ form.color }}
+            </div>
+        </div>
 
-    <div class="mb-3">
-        <label for="{{ form.name.id_for_label }}" class="form-label">Tag Name</label>
-        {{ form.name }}
-    </div>
-
-    <div class="mb-3">
-        <label for="{{ form.color.id_for_label }}" class="form-label">Tag Color</label>
-        {{ form.color }}
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{% url 'tag_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
-
-{% if form.errors %}
-<div class="alert alert-danger mt-3">
-    <strong>Form Errors:</strong>
-    <ul>
-        {% for field, errors in form.errors.items %}
-            <li><strong>{{ field }}</strong>: {{ errors }}</li>
-        {% endfor %}
-    </ul>
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% url 'tag_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
 </div>
-{% endif %}
-
 {% endblock %}

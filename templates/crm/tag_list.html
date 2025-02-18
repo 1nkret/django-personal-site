@@ -1,13 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'crm/base_crm.html' %}
 
 {% block title %}Tags | CRM{% endblock %}
 
-{% load static %}
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/crm.css' %}">
-{% endblock %}
-
-{% block content %}
+{% block crm_content %}
 <h2>Tags Management</h2>
 <a href="{% url 'tag_create' %}" class="btn btn-success">Add New Tag</a>
 

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home | My Portfolio{% endblock %}
+{% block title %}{{ settings.title }}{% endblock %}
 
 {% load static %}
 {% block extra_css %}
@@ -9,49 +9,73 @@
 
 {% block content %}
 <div class="text-center">
-    <h1 class="display-4">Hi, I'm Dmytro!</h1>
-    <p class="lead">A passionate Backend Python Developer specializing in Django, FastAPI, and more.</p>
+    <h1 class="display-4">{{ settings.title }}</h1>
+    <p class="lead">{{ settings.subtitle }}</p>
 </div>
 
 <hr>
 
-<h2 id="projects" class="text-center mt-5">My Projects</h2>
-<div class="row">
-    {% for project in projects %}
-        <div class="col-md-4">
-            <div class="card home-card">
-                {% if project.image %}
-                    <img src="{{ project.image.url }}" class="card-img-top home-image" alt="{{ project.title }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text">{{ project.description }}</p>
+<div class="container">
+    <h2>My Projects</h2>
 
-                    {% if project.tags.all %}
-                        <p>
-                            <strong>Technologies:</strong>
-                            {% for tag in project.tags.all %}
-                                <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
-                                    {{ tag.name }}
-                                </span>
-                            {% endfor %}
-                        </p>
+    <div class="row mt-3">
+        {% for project in projects|slice:":5" %}
+            <div class="col-md-4">
+                <div class="card project-card">
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" class="card-img-top project-image" alt="{{ project.title }}">
                     {% endif %}
-
-                    {% if project.repo_link %}
-                        <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
-                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                        {% if project.tags.all %}
+                            <p>
+                                <strong>Technologies:</strong>
+                                {% for tag in project.tags.all %}
+                                    <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
+                                        {{ tag.name }}
+                                    </span>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        {% if project.repo_link %}
+                            <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
+        {% empty %}
+            <p>No projects found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Кнопка "View All Projects", если проектов больше 5 -->
+    {% if projects|length > 5 %}
+        <div class="text-center mt-4">
+            <a href="{% url 'project_list' %}" class="btn btn-outline-primary">View All Projects</a>
         </div>
-    {% endfor %}
+    {% endif %}
+</div>
+
+
+{% if projects|length > 6 %}
+<div class="text-center mt-4">
+    <a href="{% url 'project_list' %}" class="btn btn-outline-primary">Show all</a>
+</div>
+{% endif %}
+
+<hr>
+
+<h2 id="about" class="text-center mt-5">About Me</h2>
+<div class="bio-section">
+    <p>{{ settings.about_me }}</p>
 </div>
 
 <hr>
 
 <h2 id="contact" class="text-center mt-5">Contact Me</h2>
-<div class="text-center">
-    <p>Email: <a href="mailto:support@localhost">support@localhost</a></p>
-    <p>Phone: +38 (063) 000-00-00</p>
+<div class="contact-section">
+    <p>Email: <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>
+    <p>Phone: {{ settings.contact_phone }}</p>
 </div>
 {% endblock %}

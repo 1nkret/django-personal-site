@@ -1,10 +1,10 @@
 from django.urls import path
 from .views import (tag_list, tag_create, tag_update,
                     tag_delete, project_list, project_create,
-                    project_update, project_delete, crm_home)
+                    project_update, project_delete, main_page_settings)
 
 urlpatterns = [
-    path("", crm_home, name="crm_home"),
+    path("", main_page_settings, name="main_page_settings"),
 
     path("tags/", tag_list, name="tag_list"),
     path("tags/create/", tag_create, name="tag_create"),

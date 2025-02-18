@@ -21,7 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'crm_home' %}">CRM</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'main_page_settings' %}">CRM</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'project_list' %}">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
@@ -30,8 +30,7 @@
     </nav>
 
     <div class="container mt-4">
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </div>
 
     <footer class="bg-dark text-white text-center py-3 mt-4">
@@ -39,13 +38,10 @@
     </footer>
 
     <!-- JQUERY ДОЛЖЕН БЫТЬ ПЕРВЫМ -->
-    <!-- Подключаем jQuery и Select2 -->
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+    {% block extra_js %}{% endblock %}
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
     <script src="{% static 'js/select2_init.js' %}"></script>
 </body>
 </html>

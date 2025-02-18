@@ -1,14 +1,25 @@
-/* ========== Общие стили для всего сайта ========== */
+/* ========== Фикс белого пробела внизу ========== */
 html, body {
     height: 100%;
+    min-height: 100vh; /* Гарантирует, что фон покрывает всю страницу */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 body {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Фиксируем фон */
     color: #343a40;
     font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
+    flex-grow: 1; /* Растягиваем body */
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 h2 {
@@ -37,16 +48,17 @@ h2 {
     margin-bottom: 20px;
 }
 
-/* Контейнер */
+/* Контейнер для контента */
 .container {
-    flex: 1;
+    flex-grow: 1; /* Контейнер занимает всё доступное пространство */
 }
 
-/* Подвал */
+/* Футер всегда прижат к низу */
 footer {
+    width: 100%;
     background: #212529;
     color: white;
     padding: 10px;
     text-align: center;
-    width: 100%;
+    margin-top: auto; /* Прижимает футер к низу */
 }

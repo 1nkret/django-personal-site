@@ -1,12 +1,9 @@
 import json
 
+from django.core.files.storage import default_storage
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Tag, Project
-from .forms import (TagForm, ProjectForm)
-
-
-def crm_home(request):
-    return render(request, "crm/crm_home.html")
+from .models import Tag, Project, MainPageSettings
+from .forms import (TagForm, ProjectForm, MainPageSettingsForm)
 
 
 def tag_list(request):
@@ -34,7 +31,7 @@ def tag_update(request, pk):
             return redirect("tag_list")
     else:
         form = TagForm(instance=tag)
-    return render(request, "crm/tag_form.html", {"form": form})
+    return render(request, "crm/tag_form.html", {"form": form, "tag": tag})
 
 
 def tag_delete(request, pk):
@@ -53,6 +50,12 @@ def project_list(request):
 def project_form_handler(request, project=None):
     if request.method == "POST":
         post_data = request.POST.copy()
+
+        # ✅ Обрабатываем удаление изображения
+        if post_data.get("remove_image") == "true" and project and project.image:
+            default_storage.delete(project.image.path)  # Удаляем физический файл
+            project.image = None  # Удаляем путь из БД
+            project.save()
 
         tag_ids_raw = post_data.get("tags", "[]").strip()
 
@@ -107,3 +110,16 @@ def project_delete(request, pk):
         project.delete()
         return redirect("crm_project_list")
     return render(request, "crm/project_confirm_delete.html", {"project": project})
+
+
+def main_page_settings(request):
+    settings, created = MainPageSettings.objects.get_or_create(id=1)
+    if request.method == "POST":
+        form = MainPageSettingsForm(request.POST, instance=settings)
+        if form.is_valid():
+            form.save()
+            return redirect('main_page_settings')
+    else:
+        form = MainPageSettingsForm(instance=settings)
+
+    return render(request, 'crm/main_page_settings.html', {'form': form})

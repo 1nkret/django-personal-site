@@ -1,0 +1,14 @@
+{% extends 'crm/base_crm.html' %}
+
+{% block title %}Edit Main Page{% endblock %}
+
+{% block crm_content %}
+<div class="crm-form-container">
+    <h2>Edit Main Page</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+{% endblock %}

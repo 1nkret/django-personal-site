@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from apps.crm.models import Project
+from apps.crm.models import MainPageSettings, Project
 
 
 def home(request):
-    projects = Project.objects.all()
-    return render(request, "home.html", {"projects": projects})
+    settings = MainPageSettings.objects.first()
+    projects = Project.objects.all()[:6]
+    return render(request, 'home.html', {'settings': settings, 'projects': projects})
