@@ -75,7 +75,17 @@
 
 <h2 id="contact" class="text-center mt-5">Contact Me</h2>
 <div class="contact-section">
-    <p>Email: <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>
-    <p>Phone: {{ settings.contact_phone }}</p>
+    {% if settings.contact_telegram %}
+        <p><a href="{{ settings.contact_telegram }}">Telegram</a></p>
+    {% endif %}
+    {% if settings.contact_github %}
+        <p><a href="{{ settings.contact_github }}">Github</a></p>
+    {% endif %}
+    {% if settings.contact_linkedin %}
+        <p><a href="{{ settings.contact_linkedin }}">LinkedIn</a></p>
+    {% endif %}
+<!--    {% if settings.contact_email %}-->
+<!--        <p><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>-->
+<!--    {% endif %}-->
 </div>
 {% endblock %}

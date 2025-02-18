@@ -26,4 +26,5 @@ class TagForm(forms.ModelForm):
 class MainPageSettingsForm(forms.ModelForm):
     class Meta:
         model = MainPageSettings
-        fields = ['title', 'subtitle', 'about_me', 'contact_email', 'contact_phone']
+        fields = ['title', 'subtitle', 'about_me', 'contact_email',
+                  'contact_github', 'contact_linkedin', 'contact_telegram']

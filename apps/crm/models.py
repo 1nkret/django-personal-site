@@ -27,10 +27,12 @@ class Project(models.Model):
 
 class MainPageSettings(models.Model):
     title = models.CharField(max_length=255, default="Welcome!")
-    subtitle = models.TextField(blank=True, default="Its description.")
+    subtitle = models.TextField(default="Its description.")
     about_me = models.TextField(blank=True, default="Im very good.")
-    contact_email = models.EmailField(default="support@localhost")
-    contact_phone = models.CharField(max_length=20, default="+38 (063) 000-00-00")
+    contact_telegram = models.CharField(default="https://t.me", blank=True, max_length=255)
+    contact_linkedin = models.CharField(default="https://linkedin.com", blank=True, max_length=255)
+    contact_github = models.CharField(default="https://github.com", blank=True, max_length=255)
+    contact_email = models.EmailField(default="support@localhost", blank=True)
 
     def __str__(self):
         return "Main Page Settings"
