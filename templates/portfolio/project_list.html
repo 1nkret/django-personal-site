@@ -13,7 +13,7 @@
     <h2>My Projects</h2>
 
     <div class="row mt-3">
-        {% for project in projects %}
+        {% for project in page_obj %}
             <div class="col-md-4">
                 <div class="card project-card">
                     {% if project.image %}
@@ -41,6 +41,35 @@
         {% empty %}
             <p>No projects found.</p>
         {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination-container">
+        <nav aria-label="Project pagination">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&lsaquo;</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&rsaquo;</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
 </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 import json
 
 from django.core.files.storage import default_storage
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Tag, Project, MainPageSettings
 from .forms import (TagForm, ProjectForm, MainPageSettingsForm)
@@ -8,7 +9,11 @@ from .forms import (TagForm, ProjectForm, MainPageSettingsForm)
 
 def tag_list(request):
     tags = Tag.objects.all()
-    return render(request, "crm/tag_list.html", {"tags": tags})
+    paginator = Paginator(tags, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "crm/tag_list.html", {"tags": tags, "page_obj": page_obj})
 
 
 def tag_create(request):
@@ -44,7 +49,11 @@ def tag_delete(request, pk):
 
 def project_list(request):
     projects = Project.objects.all()
-    return render(request, "crm/project_list.html", {"projects": projects})
+    paginator = Paginator(projects, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "crm/project_list.html", {"projects": projects, "page_obj": page_obj})
 
 
 def project_form_handler(request, project=None):
