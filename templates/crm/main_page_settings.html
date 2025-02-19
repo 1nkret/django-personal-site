@@ -4,11 +4,157 @@
 
 {% block crm_content %}
 <div class="crm-form-container">
-    <h2>Edit Main Page</h2>
+    <h2>Edit Main Page Content</h2>
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" name="save_settings" class="btn btn-primary">Save Content</button>
     </form>
 </div>
+
+<div class="crm-form-container" style="margin-top: 30px">
+    <h2>Manage Main Page Projects</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="margin-bottom: 10px">
+            <select id="project-selector" class="form-control select2-tags">
+                <option value="" disabled selected>Choose a project...</option>
+                {% for project in all_projects %}
+                    <option value="{{ project.id }}">{{ project.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <ul class="list-group">
+            {% for project in projects %}
+                <li id="project-{{ project.project.id }}" class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ project.project.title }}
+                    <div>
+                        <button type="button" class="btn btn-sm btn-secondary move-project"
+                                data-project-id="{{ project.project.id }}" data-direction="up">↑</button>
+                        <button type="button" class="btn btn-sm btn-secondary move-project"
+                                data-project-id="{{ project.project.id }}" data-direction="down">↓</button>
+                        <button type="button" class="btn btn-sm btn-danger remove-project"
+                                data-project-id="{{ project.project.id }}">Delete</button>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </form>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script>
+    document.getElementById("add-project").addEventListener("click", function() {
+        var projectId = document.getElementById("tag-selector").value;
+        if (!projectId) return;
+
+        fetch("{% url 'add_project_to_main' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ project_id: projectId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                location.reload();
+            }
+        });
+    });
+</script>
+<script>
+    document.querySelectorAll(".move-project").forEach(button => {
+        button.addEventListener("click", function(event) {
+            event.preventDefault();
+            let projectId = this.dataset.projectId;
+            let direction = this.dataset.direction;
+
+            fetch("{% url 'move_project_ajax' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `project_id=${projectId}&direction=${direction}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    location.reload(); // Или можешь обновить DOM без перезагрузки
+                }
+            });
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Инициализация Select2
+        $("#project-selector").select2({
+            placeholder: "Choose a project...",
+            allowClear: true,
+            width: '100%'
+        });
+
+        // Автоматическое добавление проекта при выборе
+        $("#project-selector").on("select2:select", function (e) {
+            var projectId = e.params.data.id;
+            if (!projectId) return;
+
+            fetch("{% url 'add_project_to_main' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ project_id: projectId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    $("#project-selector").val(null).trigger("change"); // Сбрасываем выбор
+                    location.reload(); // Обновляем список
+                }
+            });
+        });
+    });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener("click", function (event) {
+        if (event.target.classList.contains("remove-project")) {
+            event.preventDefault();
+
+            let projectId = event.target.dataset.projectId;
+            let projectElement = document.getElementById(`project-${projectId}`);
+
+            fetch("{% url 'remove_project_ajax' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `project_id=${projectId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    if (projectElement) {
+                        projectElement.style.transition = "opacity 0.3s ease-out";
+                        projectElement.style.opacity = "0";
+                        setTimeout(() => projectElement.remove(), 300);
+                    } else {
+                        console.error("❌ Ошибка: Элемент не найден в DOM");
+                    }
+                } else {
+                    console.error("❌ Ошибка: Сервер не удалил проект");
+                }
+            })
+            .catch(error => console.error("❌ AJAX Ошибка:", error));
+        }
+    });
+});
+</script>
 {% endblock %}

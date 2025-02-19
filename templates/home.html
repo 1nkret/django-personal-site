@@ -53,7 +53,7 @@
     </div>
 
     <!-- Кнопка "View All Projects", если проектов больше 5 -->
-    {% if projects|length > 5 %}
+    {% if all_projects|length > 5 %}
         <div class="text-center mt-4">
             <a href="{% url 'project_list' %}" class="btn btn-outline-primary">View All Projects</a>
         </div>

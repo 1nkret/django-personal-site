@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tag, Project, MainPageSettings
+from .models import Tag, Project, MainPageSettings, MainPageProjects
 
 
 class ProjectForm(forms.ModelForm):
@@ -17,9 +17,15 @@ class ProjectForm(forms.ModelForm):
         required=False
     )
 
+    rating = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 6)],  # От 1 до 5
+        widget=forms.RadioSelect(attrs={'class': 'star-rating'}),
+        required=True
+    )
+
     class Meta:
         model = Project
-        fields = ["title", "description", "repo_link", "image", "tags", "start_date", "end_date"]
+        fields = ["title", "description", "repo_link", "image", "tags", "start_date", "end_date", "rating"]
 
 
 class TagForm(forms.ModelForm):
@@ -36,3 +42,15 @@ class MainPageSettingsForm(forms.ModelForm):
         model = MainPageSettings
         fields = ['title', 'subtitle', 'about_me', 'contact_email',
                   'contact_github', 'contact_linkedin', 'contact_telegram']
+
+
+class MainPageProjectsForm(forms.ModelForm):
+    class Meta:
+        model = MainPageProjects
+        fields = ['projects']
+
+    projects = forms.ModelMultipleChoiceField(
+        queryset=Project.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )

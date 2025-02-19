@@ -24,6 +24,8 @@ class Project(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
 
+    rating = models.PositiveIntegerField(default=1)
+
     def __str__(self):
         return self.title
 
@@ -39,3 +41,16 @@ class MainPageSettings(models.Model):
 
     def __str__(self):
         return "Main Page Settings"
+
+
+class MainPageProjects(models.Model):
+    projects = models.ManyToManyField("Project", through="MainPageProjectOrder")
+
+
+class MainPageProjectOrder(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.CASCADE)
+    main_page = models.ForeignKey(MainPageProjects, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
