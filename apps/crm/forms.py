@@ -17,15 +17,30 @@ class ProjectForm(forms.ModelForm):
         required=False
     )
 
-    rating = forms.ChoiceField(
-        choices=[(i, str(i)) for i in range(1, 6)],  # От 1 до 5
+    rating_overall = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect(attrs={'class': 'star-rating'}),
+        required=True
+    )
+    rating_difficulty = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 6)],
+        widget=forms.RadioSelect(attrs={'class': 'star-rating'}),
+        required=True
+    )
+    rating_usefulness = forms.ChoiceField(
+        choices=[(i, str(i)) for i in range(1, 6)],
         widget=forms.RadioSelect(attrs={'class': 'star-rating'}),
         required=True
     )
 
     class Meta:
         model = Project
-        fields = ["title", "description", "repo_link", "image", "tags", "start_date", "end_date", "rating"]
+        fields = [
+            "title", "description", "repo_link",
+            "image", "tags", "start_date",
+            "end_date", "rating_overall",
+            "rating_difficulty", "rating_usefulness"
+        ]
 
 
 class TagForm(forms.ModelForm):

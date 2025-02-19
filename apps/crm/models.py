@@ -24,7 +24,9 @@ class Project(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
 
-    rating = models.PositiveIntegerField(default=1)
+    rating_overall = models.PositiveIntegerField(default=1)
+    rating_difficulty = models.PositiveIntegerField(default=1)
+    rating_usefulness = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.title

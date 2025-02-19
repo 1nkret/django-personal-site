@@ -77,6 +77,34 @@
             <label for="{{ form.end_date.id_for_label }}" class="form-label">End Date (optional)</label>
             {{ form.end_date }}
         </div>
+        <div class="mb-3">
+            <label class="form-label">Overall Rating</label>
+            <div class="star-rating-container star-rating-overall">
+                {% for value, label in form.rating_overall.field.choices %}
+                    <input type="radio" id="star-overall-{{ value }}" name="{{ form.rating_overall.html_name }}" value="{{ value }}"
+                           {% if form.rating_overall.value|stringformat:"s" == value|stringformat:"s" %}checked{% endif %}>
+                    <label for="star-overall-{{ value }}" class="star">&#9733;</label>
+                {% endfor %}
+            </div>
+
+            <label class="form-label">Difficulty Rating</label>
+            <div class="star-rating-container star-rating-difficulty">
+                {% for value, label in form.rating_difficulty.field.choices %}
+                    <input type="radio" id="star-difficulty-{{ value }}" name="{{ form.rating_difficulty.html_name }}" value="{{ value }}"
+                           {% if form.rating_difficulty.value|stringformat:"s" == value|stringformat:"s" %}checked{% endif %}>
+                    <label for="star-difficulty-{{ value }}" class="star">&#9733;</label>
+                {% endfor %}
+            </div>
+
+            <label class="form-label">Usefulness</label>
+            <div class="star-rating-container star-rating-usefulness">
+                {% for value, label in form.rating_usefulness.field.choices %}
+                    <input type="radio" id="star-usefulness-{{ value }}" name="{{ form.rating_usefulness.html_name }}" value="{{ value }}"
+                           {% if form.rating_usefulness.value|stringformat:"s" == value|stringformat:"s" %}checked{% endif %}>
+                    <label for="star-usefulness-{{ value }}" class="star">&#9733;</label>
+                {% endfor %}
+            </div>
+        </div>
 
         <div class="button-container">
             <button type="submit" class="btn btn-primary">Save</button>
@@ -99,6 +127,44 @@ document.addEventListener("DOMContentLoaded", function () {
             removeInput.value = "true"; // Устанавливаем значение для удаления
         });
     }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".star-rating label");
+    stars.forEach(star => {
+        star.addEventListener("click", function () {
+            let rating = this.previousElementSibling.value;
+            console.log("Выбранный рейтинг:", rating);
+        });
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    function updateStars(container) {
+        let radios = container.querySelectorAll("input");
+        let stars = container.querySelectorAll("label");
+
+        radios.forEach((radio, index) => {
+            radio.addEventListener("change", function () {
+                let rating = parseInt(radio.value);
+                stars.forEach((star, i) => {
+                    star.style.color = i < rating ? "gold" : "#ccc";
+                });
+            });
+        });
+
+        let selected = container.querySelector("input:checked");
+        if (selected) {
+            let rating = parseInt(selected.value);
+            stars.forEach((star, i) => {
+                star.style.color = i < rating ? "gold" : "#ccc";
+            });
+        }
+    }
+
+    document.querySelectorAll(".star-rating-container").forEach(updateStars);
 });
 </script>
 {% endblock %}
