@@ -27,7 +27,7 @@
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description }}</p>
+                        <p class="card-text">{{ project.description|truncatechars:200 }}</p>
                         {% if project.tags.all %}
                             <p>
                                 <strong>Technologies:</strong>
@@ -38,9 +38,10 @@
                                 {% endfor %}
                             </p>
                         {% endif %}
-                        {% if project.repo_link %}
-                            <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
-                        {% endif %}
+                        <p class="card-duration">
+                            Duration: {{ project.start_date|date:"Y.m" }}{% if project.end_date %} - {{ project.end_date|date:"Y.m" }}{% else %}-(in progress...){% endif %}
+                        </p>
+                        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
             </div>
@@ -50,7 +51,7 @@
     </div>
 
     <!-- Кнопка "View All Projects", если проектов больше 5 -->
-    {% if projects|length > 5 %}
+    {% if all_projects|length > 5 %}
         <div class="text-center mt-4">
             <a href="{% url 'project_list' %}" class="btn btn-outline-primary">View All Projects</a>
         </div>
@@ -75,7 +76,17 @@
 
 <h2 id="contact" class="text-center mt-5">Contact Me</h2>
 <div class="contact-section">
-    <p>Email: <a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>
-    <p>Phone: {{ settings.contact_phone }}</p>
+    {% if settings.contact_telegram %}
+        <p><a href="{{ settings.contact_telegram }}">Telegram</a></p>
+    {% endif %}
+    {% if settings.contact_github %}
+        <p><a href="{{ settings.contact_github }}">Github</a></p>
+    {% endif %}
+    {% if settings.contact_linkedin %}
+        <p><a href="{{ settings.contact_linkedin }}">LinkedIn</a></p>
+    {% endif %}
+<!--    {% if settings.contact_email %}-->
+<!--        <p><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>-->
+<!--    {% endif %}-->
 </div>
 {% endblock %}

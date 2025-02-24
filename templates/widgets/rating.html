@@ -1,0 +1,7 @@
+<div class="star-rating">
+    {% for choice in widget.choices %}
+        <input type="radio" name="{{ widget.name }}" id="star-{{ choice.0 }}" value="{{ choice.0 }}"
+               class="star-input" {% if choice.0|stringformat:"s" == widget.value|stringformat:"s" %}checked{% endif %}>
+        <label for="star-{{ choice.0 }}" class="star-label">{{ choice.1 }}</label>
+    {% endfor %}
+</div>

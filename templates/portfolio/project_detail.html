@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.title }} | Portfolio{% endblock %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/portfolio.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stars.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="project-detail">
+        {% if project.image %}
+            <img src="{{ project.image.url }}" class="project-detail-image" alt="{{ project.title }}">
+        {% endif %}
+        <h2>{{ project.title }}</h2>
+        <p class="project-description">{{ project.description }}</p>
+
+        {% if project.tags.all %}
+            <p style="text-align: left">
+                <strong>Technologies:</strong>
+                {% for tag in project.tags.all %}
+                    <span class="badge" style="background-color: {{ tag.color }}; color: #fff;">
+                        {{ tag.name }}
+                    </span>
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <p class="card-duration">
+            Duration: {{ project.start_date|date:"Y.m" }}{% if project.end_date %} - {{ project.end_date|date:"Y.m" }}{% else %}-(in progress...){% endif %}
+        </p>
+
+        <div class="rating">
+            <!-- Overall Rating -->
+            <p class="rating-text">Overall Rating</p>
+            <div class="star-rating-container star-rating-overall">
+                {% for i in "12345" %}
+                    <span class="star {% if forloop.counter <= project.rating_overall %}active{% endif %}">&#9733;</span>
+                {% endfor %}
+            </div>
+
+            <!-- Difficulty Rating -->
+            <p class="rating-text">Difficulty Rating</p>
+            <div class="star-rating-container star-rating-difficulty">
+                {% for i in "12345" %}
+                    <span class="star {% if forloop.counter <= project.rating_difficulty %}active{% endif %}">&#9733;</span>
+                {% endfor %}
+            </div>
+
+            <!-- Usefulness -->
+            <p class="rating-text">Usefulness</p>
+            <div class="star-rating-container star-rating-usefulness">
+                {% for i in "12345" %}
+                    <span class="star {% if forloop.counter <= project.rating_usefulness %}active{% endif %}">&#9733;</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if project.repo_link %}
+            <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
+        {% endif %}
+
+        <!-- Кнопка "Назад" -->
+        <a href="{% url 'project_list' %}?page={{ page }}" class="btn btn-secondary mt-3">← Back to projects</a>
+    </div>
+</div>
+{% endblock %}
