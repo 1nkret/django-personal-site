@@ -1,0 +1,30 @@
+.star-rating-container {
+    display: flex;
+    justify-content: start;
+    gap: 5px;
+}
+
+/* Убираем ненужные стили для input, они не используются */
+.star-rating-container input {
+    display: none;
+}
+
+/* Делаем звезды серыми по умолчанию */
+.star-rating-container .star {
+    font-size: 24px;
+    color: #ccc;
+}
+
+/* Делаем звезды золотыми */
+.star-rating-container .star.active {
+    color: #ffc107;
+}
+
+.star {
+    font-size: 24px;
+    color: #ccc;
+}
+
+.star.active {
+    color: #ffc107;
+}

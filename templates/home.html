@@ -27,7 +27,7 @@
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
-                        <p class="card-text">{{ project.description }}</p>
+                        <p class="card-text">{{ project.description|truncatechars:200 }}</p>
                         {% if project.tags.all %}
                             <p>
                                 <strong>Technologies:</strong>
@@ -41,9 +41,7 @@
                         <p class="card-duration">
                             Duration: {{ project.start_date|date:"Y.m" }}{% if project.end_date %} - {{ project.end_date|date:"Y.m" }}{% else %}-(in progress...){% endif %}
                         </p>
-                        {% if project.repo_link %}
-                            <a href="{{ project.repo_link }}" class="btn btn-primary" target="_blank">View on GitHub</a>
-                        {% endif %}
+                        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">View Project</a>
                     </div>
                 </div>
             </div>
